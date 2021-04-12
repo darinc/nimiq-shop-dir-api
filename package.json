@@ -35,8 +35,8 @@
     "babel-eslint": "10.x.x",
     "dotenv": "8.x.x",
     "eslint": "7.x.x",
-<<<<<<< HEAD
-    "exiting": "6.x.x"
+    "exiting": "6.x.x",
+    "hapi-swagger": "14.x.x"
   },
   "repository": {
     "type": "git",
@@ -52,9 +52,5 @@
     "url": "https://github.com/darinc/nimiq-shop-dir-api/issues"
   },
   "homepage": "https://github.com/darinc/nimiq-shop-dir-api#readme"
-=======
-    "exiting": "6.x.x",
-    "hapi-swagger": "14.x.x"
   }
->>>>>>> 2a479ff ((flavor) swagger v3.0.0)
 }
