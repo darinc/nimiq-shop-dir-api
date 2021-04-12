@@ -10,13 +10,24 @@
     "test": "test"
   },
   "scripts": {
+    "build:test": "docker-compose build test",
+    "build:web": "docker-compose build web",
+    "docker:lint": "docker-compose run test npm run lint",
+    "docker:start": "docker-compose up -d web",
+    "docker:test": "docker-compose run test npm test",
+    "docker:test:ci": "docker-compose up --build test_base",
     "start": "node server",
     "test": "lab -a @hapi/code -I \"__core-js_shared__,CSS,regeneratorRuntime,core\" -L",
     "lint": "eslint ."
   },
   "dependencies": {
     "@hapi/boom": "9.x.x",
+    "@hapi/glue": "8.x.x",
+    "@hapi/hapi": "20.x.x",
+    "@hapipal/confidence": "6.x.x",
     "@hapipal/haute-couture": "4.x.x",
+    "@hapipal/toys": "3.x.x",
+    "exiting": "6.x.x",
     "joi": "17.x.x"
   },
   "devDependencies": {
@@ -31,12 +42,11 @@
     "@hapipal/confidence": "6.x.x",
     "@hapipal/hpal": "3.x.x",
     "@hapipal/hpal-debug": "2.x.x",
-    "@hapipal/toys": "3.x.x",
     "babel-eslint": "10.x.x",
-    "dotenv": "8.x.x",
     "eslint": "7.x.x",
     "exiting": "6.x.x",
-    "hapi-swagger": "14.x.x"
+    "hapi-swagger": "14.x.x",
+    "nodemon": "2.x.x"
   },
   "repository": {
     "type": "git",
