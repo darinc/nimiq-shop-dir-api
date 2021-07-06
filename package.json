@@ -1,0 +1,35 @@
+{
+  "name": "nimiq-shop-dir-api",
+  "version": "0.0.1",
+  "description": "REST API backend for the nimiq shop directory",
+  "main": "api/server.js",
+  "scripts": {
+    "start": "node api/server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/darinc/nimiq-shop-dir-api.git"
+  },
+  "keywords": [
+    "nimiq",
+    "crypto",
+    "shop",
+    "api"
+  ],
+  "author": "Darin Chambers",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/darinc/nimiq-shop-dir-api/issues"
+  },
+  "homepage": "https://github.com/darinc/nimiq-shop-dir-api#readme",
+  "dependencies": {
+    "@hapi/hapi": "^20.1.5",
+    "@hapi/inert": "^6.0.3",
+    "@hapi/vision": "^6.1.0",
+    "dotenv": "^10.0.0",
+    "hapi-swagger": "^14.2.1",
+    "joi": "^17.4.0",
+    "postgres": "^1.0.2"
+  }
+}
