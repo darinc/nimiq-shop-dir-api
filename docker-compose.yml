@@ -1,6 +1,7 @@
 version: '3.4'
 services:
     api_base: &api_base
+        env_file: server/.env
         build:
             context: .
             dockerfile: server/Dockerfile
@@ -40,3 +41,8 @@ services:
             - ./server:/app/server
             - ./test:/app/test
             - ./package.json:/app/package.json
+    postgres:
+        env_file: server/.env
+        image: postgres:13.3-alpine
+        environment:
+            POSTGRES_PASSWORD: postgres
