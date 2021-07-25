@@ -10,12 +10,14 @@
     "test": "test"
   },
   "scripts": {
-    "build:test": "docker-compose build test",
-    "build:web": "docker-compose build web",
-    "docker:lint": "docker-compose run test npm run lint",
-    "docker:start": "docker-compose up -d web",
-    "docker:test": "docker-compose run test npm test",
-    "docker:test:ci": "docker-compose up --build test_base",
+    "build:test": "docker compose build test",
+    "build:api": "docker compose build api",
+    "docker:lint": "docker compose run test npm run lint",
+    "docker:start": "docker compose up -d api",
+    "docker:stop": "docker compose down",
+    "docker:down": "docker compose down",
+    "docker:test": "docker compose run test npm test",
+    "docker:test:ci": "docker compose up --build test_base",
     "start": "node server",
     "test": "lab -a @hapi/code -I \"__core-js_shared__,CSS,regeneratorRuntime,core\" -L",
     "lint": "eslint ."
