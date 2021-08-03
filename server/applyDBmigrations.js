@@ -7,16 +7,14 @@ require('dotenv').config();
 const RequiredEnv = require('./requiredEnvVars');
 
 const required_env_vars = [
-    'APPLY_MIGRATIONS',
     'PG_HOST',
     'PG_PORT',
-    'PG_MIGRATION_USER',
-    'PG_MIGRATION_PASS',
-    'PG_DATABASE'
+    'POSTGRES_USER',
+    'POSTGRES_PASS',
+    'POSTGRES_DB'
 ];
 
 const config = RequiredEnv.validateRequiredEnvVars(required_env_vars);
-
 
 const Postgrator = require('postgrator');
 
@@ -31,14 +29,22 @@ const postgrator = new Postgrator({
     // Database connection config
     host: config.PG_HOST,
     port: 5432,
-    database: config.PG_DATABSE,
-    username: config.PG_MIGRATION_USER,
-    password: config.PG_MIGRATION_PASS,
+    database: config.POSTGRES_DB,
+    username: config.POSTGRES_USER,
+    password: config.POSTGRES_PASSWORD,
+
     // Schema table name. Optional. Default is schemaversion
     // If using Postgres, schema may be specified using . separator
     // For example, { schemaTable: 'schema_name.table_name' }
-    schemaTable: 'schemaversion'
+    schemaTable: `${config.POSTGRES_DB}.appliedMigrations`
 });
+
+// Log the migrations
+postgrator.on('validation-started', (migration) => console.log(migration));
+postgrator.on('validation-finished', (migration) => console.log(migration));
+postgrator.on('migration-started', (migration) => console.log(migration));
+postgrator.on('migration-finished', (migration) => console.log(migration));
+
 
 // Migrate to a specific version or 'max' for the latest
 postgrator
