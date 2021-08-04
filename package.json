@@ -15,6 +15,7 @@
     "docker:lint": "docker compose run test npm run lint",
     "docker:start": "docker compose up -d api",
     "docker:stop": "docker compose down",
+    "docker:up": "docker compose up",
     "docker:down": "docker compose down",
     "docker:test": "docker compose run test npm test",
     "docker:test:ci": "docker compose up --build test_base",
@@ -30,7 +31,8 @@
     "@hapipal/haute-couture": "4.x.x",
     "@hapipal/toys": "3.x.x",
     "exiting": "6.x.x",
-    "joi": "17.x.x"
+    "joi": "17.x.x",
+    "postgrator": "^4.1.1"
   },
   "devDependencies": {
     "@hapi/code": "8.x.x",
