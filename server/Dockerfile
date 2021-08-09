@@ -22,6 +22,7 @@ RUN npm set progress=false \
 
 COPY .eslintrc.json .
 COPY ./server ./server
+COPY ./migrations ./migrations
 COPY ./test ./test
 COPY ./lib ./lib
 

@@ -4,26 +4,24 @@
 // dotenv is used with local development and will read '.env'
 //   and then inject any values defined there into process.env vars
 require('dotenv').config();
+
 const RequiredEnv = require('./requiredEnvVars');
+const Postgrator = require('postgrator');
+
 
 const required_env_vars = [
     'PG_HOST',
     'PG_PORT',
     'POSTGRES_USER',
-    'POSTGRES_PASS',
+    'POSTGRES_PASSWORD',
     'POSTGRES_DB'
 ];
 
-const config = RequiredEnv.validateRequiredEnvVars(required_env_vars);
-
-const Postgrator = require('postgrator');
+const config = RequiredEnv.validateRequiredEnvVars({},required_env_vars);
 
 const postgrator = new Postgrator({
 
-    // Directory containing migration files
-    migrationDirectory: __dirname + '/migrations',
-    // or a glob pattern to files
-    migrationPattern: __dirname + '/some/pattern/*',
+    migrationDirectory: __dirname + '/../migrations',
     driver: 'pg',
 
     // Database connection config
@@ -33,29 +31,25 @@ const postgrator = new Postgrator({
     username: config.POSTGRES_USER,
     password: config.POSTGRES_PASSWORD,
 
-    // Schema table name. Optional. Default is schemaversion
-    // If using Postgres, schema may be specified using . separator
-    // For example, { schemaTable: 'schema_name.table_name' }
-    schemaTable: `${config.POSTGRES_DB}.appliedMigrations`
+    schemaTable: `${config.POSTGRES_DB}.dbmigrations`
 });
 
 // Log the migrations
-postgrator.on('validation-started', (migration) => console.log(migration));
-postgrator.on('validation-finished', (migration) => console.log(migration));
-postgrator.on('migration-started', (migration) => console.log(migration));
-postgrator.on('migration-finished', (migration) => console.log(migration));
+//postgrator.on('validation-started', (migration) => console.log(migration));
+//postgrator.on('validation-finished', (migration) => console.log(migration));
+postgrator.on('migration-started', (migration) => console.log('INFO: Migration started: ', migration));
+postgrator.on('migration-finished', (migration) => console.log('INFO: Migration completed: ', migration));
 
 
 // Migrate to a specific version or 'max' for the latest
 postgrator
-    .migrate()
+    .migrate('max')
     .then((appliedMigrations) => {
-
-        console.log(appliedMigrations);
+        //console.log(appliedMigrations);
     })
     .catch((error) => {
 
-        console.log(error);
+        console.log('ERROR', error);
         // Because migrations prior to the migration with error would have run
         // error object is decorated with appliedMigrations
         console.log(error.appliedMigrations); // array of migration objects

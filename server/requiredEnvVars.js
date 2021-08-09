@@ -3,7 +3,8 @@
 module.exports = {
     validateRequiredEnvVars(config, required_env_vars) {
 
-        for (const i in required_env_vars) {
+        for (let i = 0; i < required_env_vars.length; i++) {
+
             const required_env_var = required_env_vars[i];
             if (!process.env[required_env_var]) {
                 console.error('[CRITICAL] Missing required env variable:', required_env_var);
