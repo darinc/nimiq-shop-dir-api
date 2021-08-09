@@ -1,0 +1,27 @@
+# Modify this code to update the DB schema diagram.
+# To reset the sample schema, replace everything with
+# two dots ('..' - without quotes).
+
+Merchant
+-
+Id PK int
+Name string INDEX
+Summary text
+Description text
+Code UNIQUE varchar
+Active boolean
+
+Locations
+-
+MerchantID int FK >- Merchant.Id
+LocationID int FK >- Location.Id
+
+Location
+-
+Id PK int
+Type LocationType
+
+Address
+-
+Id PK int
+URL varchar
