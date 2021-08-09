@@ -4,9 +4,10 @@ const Glue = require('@hapi/glue');
 const Exiting = require('exiting');
 const Manifest = require('./manifest');
 
-if (process.env.APPLY_MIGRATIONS === true) {
+if (process.env.APPLY_MIGRATIONS === 'true') {
 
     // Run the migrations
+    console.info('INFO: Applying migrations');
     require('./applyDBmigrations');
 }
 

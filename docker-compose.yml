@@ -19,6 +19,7 @@ services:
         ports:
             - 3000:3000
     api:
+        env_file: server/.env
         # hack for docker-compose v3 dropping `extends` support
         << : *api_base
         # allows for hot-reloading of server

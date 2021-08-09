@@ -30,8 +30,10 @@
     "@hapipal/confidence": "6.x.x",
     "@hapipal/haute-couture": "4.x.x",
     "@hapipal/toys": "3.x.x",
+    "dotenv": "^10.0.0",
     "exiting": "6.x.x",
     "joi": "17.x.x",
+    "pg": "^8.7.1",
     "postgrator": "^4.1.1"
   },
   "devDependencies": {
