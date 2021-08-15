@@ -43,7 +43,7 @@ postgrator.on('migration-finished', (migration) => console.log('INFO: Migration 
 
 // Migrate to a specific version or 'max' for the latest
 postgrator
-    .migrate('max')
+    .migrate('000')
     .then((appliedMigrations) => {
         //console.log(appliedMigrations);
     })
