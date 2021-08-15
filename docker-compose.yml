@@ -11,6 +11,8 @@ services:
             "--watch",
             "lib",
             "--watch",
+            "migrations",
+            "--watch",
             "server",
             "server/index.js"
         ]
@@ -26,6 +28,7 @@ services:
         volumes:
             - ./lib:/app/lib
             - ./server:/app/server
+            - ./migrations:/app/migrations
             - ./test:/app/test
             - ./package.json:/app/package.json
     test_base: &test_base

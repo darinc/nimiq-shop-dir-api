@@ -1,27 +1,37 @@
-# Modify this code to update the DB schema diagram.
-# To reset the sample schema, replace everything with
-# two dots ('..' - without quotes).
+# Created via app.quickdatabasediagrams.com
 
-Merchant
+
+"Merchant"
 -
 Id PK int
-Name string INDEX
-Summary text
-Description text
+Name varchar INDEX
+Summary varchar
+Description varchar
 Code UNIQUE varchar
 Active boolean
 
-Locations
+"Locations"
 -
-MerchantID int FK >- Merchant.Id
-LocationID int FK >- Location.Id
+MerchantID int FK >- "Merchant".Id
+LocationID int FK >- "Location".Id
 
-Location
+"Location"
 -
 Id PK int
-Type LocationType
+Type "LocationType"
+AddressID int FK - "Address".Id
 
-Address
+
+# Inspired by https://github.com/google/libaddressinput
+"Address"
 -
 Id PK int
 URL varchar
+Name varchar
+Organisation varchar
+StreetAddressLines varchar
+DependentLocality varchar
+CityOrLocality varchar
+StateOrProvince varchar
+ZipOrPostalCode varchar
+SortingCode varchar
