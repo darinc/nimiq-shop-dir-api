@@ -52,7 +52,8 @@
     "eslint": "7.x.x",
     "exiting": "6.x.x",
     "hapi-swagger": "14.x.x",
-    "nodemon": "2.x.x"
+    "nodemon": "2.x.x",
+    "schemalint": "^0.5.5"
   },
   "repository": {
     "type": "git",

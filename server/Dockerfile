@@ -21,6 +21,7 @@ RUN npm set progress=false \
     && npm i
 
 COPY .eslintrc.json .
+COPY ./nodemon.json .
 COPY ./server ./server
 COPY ./migrations ./migrations
 COPY ./test ./test
