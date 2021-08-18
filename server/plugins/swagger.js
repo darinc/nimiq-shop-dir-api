@@ -16,6 +16,7 @@ module.exports = {
                 plugin: HapiSwagger,
                 options: {
                     info: {
+                        title: 'Nimiq Shop Directory API Documentation',
                         version: Package.version
                     }
                 }

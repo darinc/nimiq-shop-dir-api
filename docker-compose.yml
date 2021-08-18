@@ -49,4 +49,12 @@ services:
         env_file: server/.env
         image: postgres:9.6-alpine
         ports: 
-             - "5432:5432"
+            - "5432:5432"
+    unleash:
+        env_file: server/.env
+        image: unleashorg/unleash-server
+        ports:
+            - "4242:4242"
+        depends_on:
+            - postgres
+        command: npm run start

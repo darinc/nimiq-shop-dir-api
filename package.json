@@ -34,7 +34,8 @@
     "exiting": "6.x.x",
     "joi": "17.x.x",
     "pg": "^8.7.1",
-    "postgrator": "^4.1.1"
+    "postgrator": "^4.1.1",
+    "unleash-client": "^3.10.0"
   },
   "devDependencies": {
     "@hapi/code": "8.x.x",
