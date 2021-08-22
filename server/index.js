@@ -17,7 +17,7 @@ const required_env_vars = [
 
 const config = RequiredEnv.validateRequiredEnvVars({},required_env_vars);
 
-const Unleash = initialize({
+initialize({
     url: config.UNLEASH_URL,
     appName: config.APP_NAME,
     environment: config.APP_ENV,
