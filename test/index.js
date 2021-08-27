@@ -32,7 +32,6 @@ describe('GET /health', () => {
     let server;
 
     beforeEach(async () => {
-        //server = await init();
         server = await Server.deployment();
     });
 
@@ -43,7 +42,6 @@ describe('GET /health', () => {
 
     it('responds with 200', async () => {
 
-        //const server = await Server.deployment();
         const res = await server.inject({
             method: 'get',
             url: '/health'
