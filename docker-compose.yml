@@ -32,11 +32,13 @@ services:
             - ./test:/app/test
             - ./package.json:/app/package.json
     test_base: &test_base
+        env_file: server/test.env
         build:
             context: .
             dockerfile: server/Dockerfile
             target: test
     test:
+        env_file: server/test.env
         # hack for docker-compose v3 dropping `extends` support
         << : *test_base
         # allows for hot-reloading of server
