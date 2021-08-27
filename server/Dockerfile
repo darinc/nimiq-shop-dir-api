@@ -16,6 +16,7 @@ WORKDIR /app
 FROM base AS dependencies
 
 COPY package*.json ./
+RUN npm install -g npm@7.21.1
 RUN npm set progress=false \
     && npm config set depth 0 \
     && npm i
