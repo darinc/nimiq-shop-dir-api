@@ -32,6 +32,7 @@ describe('GET /health', () => {
     let server;
 
     beforeEach(async () => {
+
         server = await Server.deployment();
     });
 
