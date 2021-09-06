@@ -1,14 +1,14 @@
 -- Created via app.quickdatabasediagrams.com
 
 CREATE TABLE "merchant" (
-    "id" int   NOT NULL,
+    "id" SERIAL   NOT NULL,
     "name" varchar   NOT NULL,
-    "summary" varchar,
-    "description" varchar,
+    "summary" varchar  DEFAULT null,
+    "description" varchar  DEFAULT null,
     "code" varchar   NOT NULL,
-    "active" boolean   NOT NULL,
-    "created_at" time   NOT NULL,
-    "updated_at" time   NOT NULL,
+    "active" boolean  DEFAULT true NOT NULL,
+    "created_at" timestamptz  DEFAULT now() NOT NULL,
+    "updated_at" timestamptz  DEFAULT now() NOT NULL,
     CONSTRAINT "pk_merchant" PRIMARY KEY (
         "id"
      ),
@@ -19,20 +19,19 @@ CREATE TABLE "merchant" (
 
 -- Inspired by https://github.com/google/libaddressinput
 CREATE TABLE "address" (
-    "id" int   NOT NULL,
-    "name" varchar,
-    "organisation" varchar,
-    "street_address_lines" varchar,
-    "dependent_locality" varchar,
-    "city_or_locality" varchar,
-    "state_or_province" varchar,
-    "zip_or_postal_code" varchar,
-    "sorting_code" varchar,
-    "country" varchar,
+    "id" SERIAL   NOT NULL,
+    "name" varchar  DEFAULT null,
+    "organisation" varchar  DEFAULT null,
+    "street_address_lines" varchar   NOT NULL,
+    "dependent_locality" varchar   NOT NULL,
+    "city_or_locality" varchar   NOT NULL,
+    "state_or_province" varchar   NOT NULL,
+    "zip_or_postal_code" varchar   NOT NULL,
+    "sorting_code" varchar   NOT NULL,
     -- geo location: longitude, latitude
-    "geo_location" point,
-    "created_at" time   NOT NULL,
-    "updated_at" time   NOT NULL,
+    "geo_location" point  DEFAULT null,
+    "created_at" timestamptz  DEFAULT now() NOT NULL,
+    "updated_at" timestamptz  DEFAULT now() NOT NULL,
     CONSTRAINT "pk_address" PRIMARY KEY (
         "id"
      )
@@ -40,32 +39,35 @@ CREATE TABLE "address" (
 
 CREATE TABLE "merchant__address" (
     "merchant_id" int   NOT NULL,
-    "address_id" int   NOT NULL
+    "address_id" int   NOT NULL,
+    "created_at" timestamptz  DEFAULT now() NOT NULL
 );
 
 CREATE TABLE "link" (
-    "id" int   NOT NULL,
+    "id" SERIAL   NOT NULL,
     "url" varchar   NOT NULL,
-    "created_at" time   NOT NULL,
-    "updated_at" time   NOT NULL,
+    "created_at" timestamptz  DEFAULT now() NOT NULL,
+    "updated_at" timestamptz  DEFAULT now() NOT NULL,
     CONSTRAINT "pk_link" PRIMARY KEY (
         "id"
      )
 );
 
--- link_type enum: url, google_maps
+-- link_type enum: url, googlemaps
 CREATE TABLE "merchant__link" (
     "merchant_id" int   NOT NULL,
     "link_type" link_type   NOT NULL,
     "link_id" int   NOT NULL,
     -- links can be tied to a physical address
-    "address_id" int
+    "address_id" int   NOT NULL,
+    "created_at" timestamptz  DEFAULT now() NOT NULL
 );
 
 -- products or services
 CREATE TABLE "product" (
-    "id" int   NOT NULL,
+    "id" SERIAL   NOT NULL,
     "product" varchar   NOT NULL,
+    "created_at" timestamptz  DEFAULT now() NOT NULL,
     CONSTRAINT "pk_product" PRIMARY KEY (
         "id"
      )
@@ -73,19 +75,21 @@ CREATE TABLE "product" (
 
 CREATE TABLE "merchant__product" (
     "merchant_id" int   NOT NULL,
-    "product_id" int   NOT NULL
+    "product_id" int   NOT NULL,
+    "created_at" timestamptz  DEFAULT now() NOT NULL
 );
 
 -- shipping limit
 CREATE TABLE "limit" (
-    "id" int   NOT NULL,
+    "id" SERIAL   NOT NULL,
     -- from address or geo_circle, geo_polygon
     "limit_type" limit_type   NOT NULL,
-    "limit" varchar   NOT NULL,
+    "limit" varchar  DEFAULT null,
     -- <(x,y),r> (center point and radius)
-    "geo_circle" circle   NOT NULL,
+    "geo_circle" circle  DEFAULT null,
     -- ((x1,y1),...)
-    "geo_polygon" polygon   NOT NULL,
+    "geo_polygon" polygon  DEFAULT null,
+    "created_at" timestamptz  DEFAULT now() NOT NULL,
     CONSTRAINT "pk_limit" PRIMARY KEY (
         "id"
      )
@@ -97,7 +101,8 @@ CREATE TABLE "merchant__limit" (
     "limit_type" limit_type   NOT NULL,
     "limit_id" int   NOT NULL,
     -- links can be tied to a physical address
-    "address_id" int   NOT NULL
+    "address_id" int   NOT NULL,
+    "created_at" timestamptz  DEFAULT now() NOT NULL
 );
 
 ALTER TABLE "merchant__address" ADD CONSTRAINT "fk_merchant__address_merchant_id" FOREIGN KEY("merchant_id")

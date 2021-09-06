@@ -1,45 +1,46 @@
 # Created via app.quickdatabasediagrams.com
 
-
 merchant
 -
-id PK int
+id PK SERIAL
 name varchar INDEX
-summary varchar
-description varchar
+summary varchar default=NULL
+description varchar default=NULL
 code UNIQUE varchar
-active boolean
-created_at time
-updated_at time
+active boolean default=TRUE
+created_at timestamptz default=NOW()
+updated_at timestamptz default=NOW()
 
 # Inspired by https://github.com/google/libaddressinput
 address
 -
-id PK int
-name varchar
-organisation varchar
+id PK SERIAL
+name varchar default=NULL
+organisation varchar default=NULL
 street_address_lines varchar
 dependent_locality varchar INDEX
 city_or_locality varchar INDEX
 state_or_province varchar INDEX
 zip_or_postal_code varchar INDEX
 sorting_code varchar INDEX
-geo_location point # geo location: longitude, latitude
-created_at time
-updated_at time
+# geo location: longitude, latitude
+geo_location point default=NULL
+created_at timestamptz default=NOW()
+updated_at timestamptz default=NOW()
 
 merchant__address
 -
 merchant_id int FK >- merchant.id
 address_id int FK >- address.id
+created_at timestamptz default=NOW()
 
 
 link
 -
-id PK int
+id PK SERIAL
 url varchar
-created_at time
-updated_at time
+created_at timestamptz default=NOW()
+updated_at timestamptz default=NOW()
 
 # link_type enum: url, googlemaps
 merchant__link
@@ -49,28 +50,34 @@ link_type link_type
 link_id int FK >- link.id
 # links can be tied to a physical address
 address_id int FK >0- address.id 
+created_at timestamptz default=NOW()
 
 
 product # products or services
 -
-id PK int
+id PK SERIAL
 product varchar INDEX
+created_at timestamptz default=NOW()
 
 merchant__product
 -
 merchant_id int FK >- merchant.id
 product_id int FK >- product.id
+created_at timestamptz default=NOW()
 
 
 # shipping limit
 limit
 -
-id PK int
-limit_type limit_type # from address or geo_circle, geo_polygon
-limit varchar
-geo_circle circle # <(x,y),r> (center point and radius)
-geo_polygon polygon # ((x1,y1),...)
-
+id PK SERIAL
+# from address or geo_circle, geo_polygon
+limit_type limit_type
+limit varchar default=NULL
+# <(x,y),r> (center point and radius)
+geo_circle circle default=NULL
+# ((x1,y1),...)
+geo_polygon polygon default=NULL
+created_at timestamptz default=NOW()
 
 # shipping limits
 merchant__limit
@@ -80,3 +87,5 @@ limit_type limit_type
 limit_id int FK >- limit.id
 # links can be tied to a physical address
 address_id int FK >0- address.id
+created_at timestamptz default=NOW()
+
