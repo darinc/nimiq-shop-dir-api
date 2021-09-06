@@ -10,11 +10,15 @@ REST API to find and manage shops that accept Nimiq
 - [Happi Swagger](https://github.com/glennjones/hapi-swagger) OpenAI documentation.
 
 
+## Quickstart (Docker Compose) for local development and testing
+
+
 ## Quickstart (Node)
-- copy env.template to .env and update the variables
+- copy server/env.template to server/.env and update the variables
 - Use node > v14.17.3
 - Install dependencies via: `npm install`
 - Start server via: `npm start`
+
 
 ## Test and Build
 

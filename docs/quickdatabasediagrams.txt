@@ -1,37 +1,82 @@
 # Created via app.quickdatabasediagrams.com
 
 
-"Merchant"
+merchant
 -
-Id PK int
-Name varchar INDEX
-Summary varchar
-Description varchar
-Code UNIQUE varchar
-Active boolean
-
-"Locations"
--
-MerchantID int FK >- "Merchant".Id
-LocationID int FK >- "Location".Id
-
-"Location"
--
-Id PK int
-Type "LocationType"
-AddressID int FK - "Address".Id
-
+id PK int
+name varchar INDEX
+summary varchar
+description varchar
+code UNIQUE varchar
+active boolean
+created_at time
+updated_at time
 
 # Inspired by https://github.com/google/libaddressinput
-"Address"
+address
 -
-Id PK int
-URL varchar
-Name varchar
-Organisation varchar
-StreetAddressLines varchar
-DependentLocality varchar
-CityOrLocality varchar
-StateOrProvince varchar
-ZipOrPostalCode varchar
-SortingCode varchar
+id PK int
+name varchar
+organisation varchar
+street_address_lines varchar
+dependent_locality varchar INDEX
+city_or_locality varchar INDEX
+state_or_province varchar INDEX
+zip_or_postal_code varchar INDEX
+sorting_code varchar INDEX
+geo_location point # geo location: longitude, latitude
+created_at time
+updated_at time
+
+merchant__address
+-
+merchant_id int FK >- merchant.id
+address_id int FK >- address.id
+
+
+link
+-
+id PK int
+url varchar
+created_at time
+updated_at time
+
+# link_type enum: url, googlemaps
+merchant__link
+-
+merchant_id int FK >- merchant.id
+link_type link_type
+link_id int FK >- link.id
+# links can be tied to a physical address
+address_id int FK >0- address.id 
+
+
+product # products or services
+-
+id PK int
+product varchar INDEX
+
+merchant__product
+-
+merchant_id int FK >- merchant.id
+product_id int FK >- product.id
+
+
+# shipping limit
+limit
+-
+id PK int
+limit_type limit_type # from address or geo_circle, geo_polygon
+limit varchar
+geo_circle circle # <(x,y),r> (center point and radius)
+geo_polygon polygon # ((x1,y1),...)
+
+
+# shipping limits
+merchant__limit
+-
+merchant_id int FK >- merchant.id
+limit_type limit_type
+limit_id int FK >- limit.id
+# links can be tied to a physical address
+address_id int FK >0- address.id
