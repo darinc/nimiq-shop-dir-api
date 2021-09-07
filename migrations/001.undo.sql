@@ -1,2 +1,2 @@
-DROP TYPE link_type;
-DROP TYPE location_type;
+DROP TYPE "link_type";
+DROP TYPE "limit_type";

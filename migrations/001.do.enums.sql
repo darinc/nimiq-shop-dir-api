@@ -1,9 +1,9 @@
-CREATE TYPE link_type AS ENUM (
+CREATE TYPE "link_type" AS ENUM (
   'url',
   'google_maps'
 );
 
-CREATE TYPE limit_type AS ENUM (
+CREATE TYPE "limit_type" AS ENUM (
   'geo_circle',
   'polygon',
   'dependent_locality',
