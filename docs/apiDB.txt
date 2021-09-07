@@ -15,7 +15,6 @@ name varchar INDEX
 email varchar
 active boolean
 account_id int FK >- account.id
-user_role_id int FK >- user_role.id
 created_at timestamptz default=NOW()
 updated_at timestamptz default=NOW()
 
@@ -23,7 +22,15 @@ user_role
 -
 id PK SERIAL
 name varchar INDEX
+description varchar
 created_at timestamptz default=NOW()
+
+user__user_role
+-
+user_id int FK >- user.id
+user_role_id int FK >- user_role.id
+created_at timestamptz default=NOW()
+
 
 reset_token
 -
@@ -48,7 +55,8 @@ api_auth_role
 -
 id PK SERIAL
 name varchar INDEX
-created_at time
+description varchar
+created_at timestamptz default=NOW()
 
 api_auth_permission
 -
