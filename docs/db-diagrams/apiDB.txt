@@ -1,0 +1,78 @@
+# Created via app.quickdatabasediagrams.com
+
+account
+-
+id PK SERIAL
+name varchar INDEX
+active boolean
+created_at timestamptz default=NOW()
+updated_at timestamptz default=NOW()
+
+user
+-
+id PK SERIAL
+name varchar INDEX
+email varchar
+active boolean
+account_id int FK >- account.id
+created_at timestamptz default=NOW()
+updated_at timestamptz default=NOW()
+
+user_role
+-
+id PK SERIAL
+name varchar INDEX
+description varchar
+created_at timestamptz default=NOW()
+
+user__user_role
+-
+user_id int FK >- user.id
+user_role_id int FK >- user_role.id
+created_at timestamptz default=NOW()
+
+
+reset_token
+-
+reset_token varchar INDEX
+user_id int FK >- user.id
+expires_at timestamptz default=NOW()
+created_at timestamptz default=NOW()
+
+api_token
+-
+id PK SERIAL
+secret varchar INDEX
+account_id int FK >- account.id
+created_by int FK >- user.id
+username varchar
+active boolean
+created_at timestamptz default=NOW()
+updated_at timestamptz default=null
+seen_at timestamptz default=null
+
+api_auth_role
+-
+id PK SERIAL
+name varchar INDEX
+description varchar
+created_at timestamptz default=NOW()
+
+api_auth_permission
+-
+id PK SERIAL
+method method_type
+path varchar
+api_auth_role_id int FK >- api_auth_role.id
+
+api_token__api_auth_role
+-
+api_token_id int FK >- api_token.id
+api_auth_role_id int FK >- api_auth_role.id
+created_at timestamptz default=NOW()
+
+user_role__api_auth_role
+-
+user_role_id int FK >- user_role.id
+api_auth_role_id int FK >- api_auth_role.id
+created_at timestamptz default=NOW()
