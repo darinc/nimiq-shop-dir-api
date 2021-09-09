@@ -11,6 +11,12 @@ REST API to find and manage shops that accept Nimiq
 
 
 ## Quickstart (Docker Compose) for local development and testing
+- copy server/env.template to server/.env and update the variables
+- npm run build:api && docker compose up api postgres unleash
+- connect to postgres and create the unleash DB for local development: `CREATE DATABASE unleash;`
+- Connect to swagger documentation: http://localhost:3000/documentation#/
+- Edit feature flags http://localhost:4242/features
+- 
 
 
 ## Quickstart (Node)
@@ -19,6 +25,8 @@ REST API to find and manage shops that accept Nimiq
 - Install dependencies via: `npm install`
 - Start server via: `npm start`
 
+## Database design
+[Database Design](docs/database.md)
 
 ## Test and Build
 
