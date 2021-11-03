@@ -15,6 +15,7 @@ updated_at timestamptz default=NOW()
 address
 -
 id PK SERIAL
+merchant_id int FK - merchant.id
 name varchar default=NULL
 organisation varchar default=NULL
 street_address_lines varchar
@@ -27,13 +28,6 @@ sorting_code varchar INDEX
 geo_location point default=NULL
 created_at timestamptz default=NOW()
 updated_at timestamptz default=NOW()
-
-merchant__address
--
-merchant_id int FK >- merchant.id
-address_id int FK >- address.id
-created_at timestamptz default=NOW()
-
 
 link
 -
@@ -53,16 +47,16 @@ address_id int FK >0- address.id
 created_at timestamptz default=NOW()
 
 
-product # products or services
+tag # products or services
 -
 id PK SERIAL
-product varchar INDEX
+tag varchar INDEX
 created_at timestamptz default=NOW()
 
-merchant__product
+merchant__tags
 -
 merchant_id int FK >- merchant.id
-product_id int FK >- product.id
+tag_id int FK >- tag.id
 created_at timestamptz default=NOW()
 
 
@@ -72,6 +66,7 @@ limit
 id PK SERIAL
 # from address or geo_circle, geo_polygon
 limit_type limit_type
+address_id int FK >- address.id default=NULL
 limit varchar default=NULL
 # <(x,y),r> (center point and radius)
 geo_circle circle default=NULL
@@ -88,4 +83,3 @@ limit_id int FK >- limit.id
 # links can be tied to a physical address
 address_id int FK >0- address.id
 created_at timestamptz default=NOW()
-
