@@ -20,6 +20,7 @@ CREATE TABLE "merchant" (
 -- Inspired by https://github.com/google/libaddressinput
 CREATE TABLE "address" (
     "id" SERIAL   NOT NULL,
+    "merchant_id" int   NOT NULL,
     "name" varchar  DEFAULT null,
     "organisation" varchar  DEFAULT null,
     "street_address_lines" varchar   NOT NULL,
@@ -35,12 +36,6 @@ CREATE TABLE "address" (
     CONSTRAINT "pk_address" PRIMARY KEY (
         "id"
      )
-);
-
-CREATE TABLE "merchant__address" (
-    "merchant_id" int   NOT NULL,
-    "address_id" int   NOT NULL,
-    "created_at" timestamptz  DEFAULT now() NOT NULL
 );
 
 CREATE TABLE "link" (
@@ -64,18 +59,18 @@ CREATE TABLE "merchant__link" (
 );
 
 -- products or services
-CREATE TABLE "product" (
+CREATE TABLE "tag" (
     "id" SERIAL   NOT NULL,
-    "product" varchar   NOT NULL,
+    "tag" varchar   NOT NULL,
     "created_at" timestamptz  DEFAULT now() NOT NULL,
-    CONSTRAINT "pk_product" PRIMARY KEY (
+    CONSTRAINT "pk_tag" PRIMARY KEY (
         "id"
      )
 );
 
-CREATE TABLE "merchant__product" (
+CREATE TABLE "merchant__tags" (
     "merchant_id" int   NOT NULL,
-    "product_id" int   NOT NULL,
+    "tag_id" int   NOT NULL,
     "created_at" timestamptz  DEFAULT now() NOT NULL
 );
 
@@ -84,6 +79,7 @@ CREATE TABLE "limit" (
     "id" SERIAL   NOT NULL,
     -- from address or geo_circle, geo_polygon
     "limit_type" limit_type   NOT NULL,
+    "address_id" int  DEFAULT null,
     "limit" varchar  DEFAULT null,
     -- <(x,y),r> (center point and radius)
     "geo_circle" circle  DEFAULT null,
@@ -105,11 +101,8 @@ CREATE TABLE "merchant__limit" (
     "created_at" timestamptz  DEFAULT now() NOT NULL
 );
 
-ALTER TABLE "merchant__address" ADD CONSTRAINT "fk_merchant__address_merchant_id" FOREIGN KEY("merchant_id")
+ALTER TABLE "address" ADD CONSTRAINT "fk_address_merchant_id" FOREIGN KEY("merchant_id")
 REFERENCES "merchant" ("id") ON DELETE CASCADE;
-
-ALTER TABLE "merchant__address" ADD CONSTRAINT "fk_merchant__address_address_id" FOREIGN KEY("address_id")
-REFERENCES "address" ("id") ON DELETE CASCADE;
 
 ALTER TABLE "merchant__link" ADD CONSTRAINT "fk_merchant__link_merchant_id" FOREIGN KEY("merchant_id")
 REFERENCES "merchant" ("id") ON DELETE CASCADE;
@@ -120,11 +113,14 @@ REFERENCES "link" ("id") ON DELETE CASCADE;
 ALTER TABLE "merchant__link" ADD CONSTRAINT "fk_merchant__link_address_id" FOREIGN KEY("address_id")
 REFERENCES "address" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "merchant__product" ADD CONSTRAINT "fk_merchant__product_merchant_id" FOREIGN KEY("merchant_id")
+ALTER TABLE "merchant__tags" ADD CONSTRAINT "fk_merchant__tags_merchant_id" FOREIGN KEY("merchant_id")
 REFERENCES "merchant" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "merchant__product" ADD CONSTRAINT "fk_merchant__product_product_id" FOREIGN KEY("product_id")
-REFERENCES "product" ("id") ON DELETE CASCADE;
+ALTER TABLE "merchant__tags" ADD CONSTRAINT "fk_merchant__tags_tag_id" FOREIGN KEY("tag_id")
+REFERENCES "tag" ("id") ON DELETE CASCADE;
+
+ALTER TABLE "limit" ADD CONSTRAINT "fk_limit_address_id" FOREIGN KEY("address_id")
+REFERENCES "address" ("id") ON DELETE CASCADE;
 
 ALTER TABLE "merchant__limit" ADD CONSTRAINT "fk_merchant__limit_merchant_id" FOREIGN KEY("merchant_id")
 REFERENCES "merchant" ("id") ON DELETE CASCADE;
@@ -153,5 +149,5 @@ ON "address" ("zip_or_postal_code");
 CREATE INDEX "idx_address_sorting_code"
 ON "address" ("sorting_code");
 
-CREATE INDEX "idx_product_product"
-ON "product" ("product");
+CREATE INDEX "idx_tag_tag"
+ON "tag" ("tag");
