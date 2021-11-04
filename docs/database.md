@@ -7,7 +7,7 @@ Shops/Merchants (merchant table)
 - can have addresses (address table)
 - can have links (link table)
 - can have shipping limits (limit table)
-- can offer products and services (product table)
+- can offer products and services (tag table)
 
 Shipping limits (limit table) 
 - have a defined limit_type (ENUM)
