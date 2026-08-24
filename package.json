@@ -36,7 +36,7 @@
     "joi": "17.x.x",
     "pg": "^8.7.1",
     "postgrator": "^4.1.1",
-    "unleash-client": "^3.10.0"
+    "unleash-client": "^6.12.1"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.15.0",
